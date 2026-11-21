@@ -3,16 +3,22 @@
 // dossier with make.fun's own library, exactly as the scorer rebuilds it.
 
 import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-game.ts';
 
+// Paths beside this file, not the working directory: the grader runs
+// `node /bot/main.ts` from an arbitrary cwd, so bare 'game'/'screenshots'
+// would not resolve there.
+const here = fileURLToPath(new URL('.', import.meta.url));
 const outDir = process.env.MAKEFUN_OUTPUT_DIR || '/output';
 
 rmSync(outDir, { recursive: true, force: true });
 mkdirSync(outDir, { recursive: true });
 
 for (const name of ['game', 'screenshots']) {
-  if (!existsSync(name)) throw new Error(`main.ts: no ${name}/ directory next to main.ts`);
-  cpSync(name, `${outDir}/${name}`, { recursive: true });
+  if (!existsSync(join(here, name))) throw new Error(`main.ts: no ${name}/ directory next to main.ts`);
+  cpSync(join(here, name), `${outDir}/${name}`, { recursive: true });
 }
 
 writeFileSync(
