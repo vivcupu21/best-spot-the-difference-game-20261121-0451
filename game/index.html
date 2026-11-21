@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Twin Tails — Spot the Difference</title>
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: #1d2433; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas {
+    display: block;
+    width: min(100vw, 160vh);
+    height: min(100vh, 62.5vw);
+    background: #f6ead8;
+    cursor: pointer;
+    image-rendering: auto;
+  }
+</style>
+</head>
+<body>
+<canvas id="game" width="1280" height="800"></canvas>
+<script src="src/scenes.js"></script>
+<script src="src/game.js"></script>
+</body>
+</html>
